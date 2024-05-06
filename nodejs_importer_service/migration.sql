@@ -1,4 +1,5 @@
 CREATE TABLE public.all_drugs_info (
+    id text,
     name text,
     cas text,
     gene_target_ids_array text[],

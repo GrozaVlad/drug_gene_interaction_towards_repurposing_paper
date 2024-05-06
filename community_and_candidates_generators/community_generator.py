@@ -8,9 +8,10 @@ conn = psycopg2.connect(
     user="drugbank",
     password="drugbank",
     port=5433)
-
-drugbanks = ['5.0.9']
-# drugbanks = ['3.0','4.1','4.2','4.3','4.5.0','5.0.0','5.0.1','5.0.2','5.0.3','5.0.4','5.0.5','5.0.6','5.0.7','5.0.8','5.0.9','5.0.10','5.1.0','5.1.8']
+print(conn)
+last_version = '5.1.11'
+drugbanks = ['5.1.10', '5.1.11']
+# drugbanks = ['3.0','4.1','4.2','4.3','4.5.0','5.0.0','5.0.1','5.0.2','5.0.3','5.0.4','5.0.5','5.0.6','5.0.7','5.0.8','5.0.9','5.0.10','5.1.0',last_version]
 # drugbanks = ['4.1','4.2','4.3','4.5.0','5.0.0','5.0.1','5.0.2','5.0.3','5.0.4']
 # drugbanks = ['5.0.9','5.0.10','5.1.0']
 
@@ -19,7 +20,7 @@ for z in range(0, len(drugbanks)):
     # FETCH DRUGS
     # execute a statement
     cursor = conn.cursor()
-    cursor.execute('SELECT  name, cas, gene_target_ids_array, smiles_code, inchi_code, inchi_key, molecular_formula, atc_code FROM public.all_drugs_info WHERE cardinality(gene_target_ids_array)!= 0 AND CARDINALITY(atc_code) != 0  AND drugbank_version = %s',
+    cursor.execute('SELECT  id, name, cas, gene_target_ids_array, smiles_code, inchi_code, inchi_key, molecular_formula, atc_code FROM public.all_drugs_info WHERE cardinality(gene_target_ids_array)!= 0 AND CARDINALITY(atc_code) != 0  AND drugbank_version = %s',
         (drugbankVersion,))
 
     # display the PostgreSQL database server version
@@ -28,10 +29,9 @@ for z in range(0, len(drugbanks)):
     # close the communication with the PostgreSQL
     cursor.close()
 
-    #     print(drugs)
+    print(drugs)
     df_drugs = pd.DataFrame(drugs)
-    # print(df_drugs[0].to_numpy())
-    drug_nodes = df_drugs[0].to_numpy()
+    drug_nodes = df_drugs[1].to_numpy()
     edges = []
     #     for gene in genes:
     #         for drug in gene[3]:
@@ -41,9 +41,9 @@ for z in range(0, len(drugbanks)):
         k = i + 1
         for j in range(k, len(drugs)):
             weight = 0
-            # print(drugs[i][3])
-            for gene in drugs[i][2]:
-                for gene2 in drugs[j][2]:
+            #print(drugs[i][3])
+            for gene in drugs[i][3]:
+                for gene2 in drugs[j][3]:
                     # print(gene)
                     if gene[1] and gene2[1]:
                         if gene[0] == gene2[0] and gene[1] == gene2[1]:
@@ -52,7 +52,7 @@ for z in range(0, len(drugbanks)):
             if weight > 0:
                 # print((drugs[i][0], drugs[j][0], weight))
                 # print()
-                edges.append((drugs[i][0], drugs[j][0], weight))
+                edges.append((drugs[i][1], drugs[j][1], weight))
 
     B = nx.Graph()
     # Add nodes with the node attribute \"bipartite\"

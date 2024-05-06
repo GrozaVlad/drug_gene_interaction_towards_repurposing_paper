@@ -10,7 +10,7 @@ You will need the following tools for installing and working with the drugbank d
 - Docker and Docker-compose 
 - Nodejs
 - PGAdmin(recommended) for visualising the database.
-- downloaded drugbank xmls from the [_Drugbank_](www.drugbank.com) repository.  
+- downloaded drugbank xmls from the [Drugbank](https://go.drugbank.com/) repository.  
 Relevant command for the subdirectory folder
 Enter the subdirectory in your prefered terminal window and type:  
     * **docker-compose up && npm i**: This will spin up a docker container responsible for storing the database.

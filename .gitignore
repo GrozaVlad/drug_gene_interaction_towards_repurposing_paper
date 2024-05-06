@@ -1,2 +1,3 @@
 nodejs_importer_service/node_modules
 .ipynb_checkpoints
+./Drugbank/*/*.xml

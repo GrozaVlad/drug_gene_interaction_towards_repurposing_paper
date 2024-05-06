@@ -6,9 +6,9 @@ conn = psycopg2.connect(
     user="drugbank",
     password="drugbank",
     port=5433)
-
-drugBanks = ['5.0.9']
-# drugBanks = ['3.0','4.1','4.2','4.3','4.5.0','5.0.0','5.0.1','5.0.2','5.0.3','5.0.4','5.0.5','5.0.6','5.0.7','5.0.8','5.0.9','5.0.10','5.1.0','5.1.8']
+last_version = '5.1.11'
+drugBanks = ['5.1.10', '5.1.11']
+# drugBanks = ['3.0','4.1','4.2','4.3','4.5.0','5.0.0','5.0.1','5.0.2','5.0.3','5.0.4','5.0.5','5.0.6','5.0.7','5.0.8','5.0.9','5.0.10','5.1.0',last_version]
 # drugBanks = ['4.1','4.2','4.3','4.5.0','5.0.0','5.0.1','5.0.2','5.0.3','5.0.4']
 resolutionValues = ['0.1', '0.2', '0.3', '0.4', '0.5', '0.6', '0.7', '0.8', '0.9', '1.0',
 '1.1', '1.2', '1.3', '1.4', '1.5', '1.6', '1.7', '1.8', '1.9', '2.0',
@@ -144,7 +144,7 @@ for a in range(0, len(drugBanks)):
             #     print(element[0])
 
             # query = """SELECT atc_code FROM public.drugs WHERE name = '""" + element[0] + """';"""
-            query = """SELECT atc_code FROM public.all_drugs_info WHERE drugbank_version = '5.1.8' AND name = '""" + element[0] + """';"""
+            query = """SELECT atc_code FROM public.all_drugs_info WHERE drugbank_version = '""" + last_version + """' AND name = '""" + element[0] + """';"""
 
             #     print(query)
 
